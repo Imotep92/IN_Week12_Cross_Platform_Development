@@ -28,10 +28,10 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         //getting input from touch/mouse controls
-        calculateMobileInput();
+        //calculateMobileInput();
 
         //getting input from keyboard controls
-        //calculateDesktopInputs();
+        calculateDesktopInputs();
 
         //sets up the animator
         animationSetup();
