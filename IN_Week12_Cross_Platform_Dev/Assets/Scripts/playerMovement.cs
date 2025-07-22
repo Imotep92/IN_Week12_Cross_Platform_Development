@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class playerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed; //Player's speed
-    public Vector2 inputDirection,lookDirection; //player's input along x and y axis and corresponding look direction
+    public Vector2 inputDirection, lookDirection; //player's input along x and y axis and corresponding look direction
     Animator anim; // player animator
 
+    private Touch theTouch;
     private Vector3 touchStart, touchEnd;
     [SerializeField] GameObject dpad; //dpad gameobject icon
-    
+
     [SerializeField] GameObject dpadBoundary; //dpad boundary gameobject icon
     [SerializeField] float dPadRadius = 10f;
 
@@ -30,10 +31,13 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         //getting input from touch/mouse controls
-        calculateMobileInput();
+        //calculateMobileInput();
 
         //getting input from keyboard controls
         //calculateDesktopInputs();
+
+        //getting input from Touch controls alone
+        calculateTouchInput();
 
         //sets up the animator
         animationSetup();
@@ -50,7 +54,7 @@ public class playerMovement : MonoBehaviour
 
         inputDirection = new Vector2(x, y).normalized;
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             attack();
         }
@@ -88,7 +92,50 @@ public class playerMovement : MonoBehaviour
         anim.SetTrigger("Attack");
     }
 
-    void calculateMobileInput()
+    void calculateTouchInput()
+    {
+        if (Input.touchCount > 0 ) //gets first finger touch
+        {
+            theTouch = Input.GetTouch(0); // get screen touch
+            dpad.gameObject.SetActive(true);
+            dpadBoundary.gameObject.SetActive(true);
+
+            if (theTouch.phase == TouchPhase.Began)  //first screen touch poisition is recorded where the click started
+            {
+                touchStart = theTouch.position;
+            }
+
+            else if (theTouch.phase == TouchPhase.Moved || theTouch.phase == TouchPhase.Ended)
+            {
+                touchEnd = theTouch.position;  // the screen touch position while the button is held down is recorded
+
+                float x = touchEnd.x - touchStart.x; // Difference between start and current mouse position is recorded
+                float y = touchEnd.y - touchStart.y;
+
+                Vector2 inputDirection = new Vector2(x, y).normalized; // input direction is set
+
+                dpadBoundary.transform.position = touchStart; // boundary position is touchStart
+
+                if ((touchEnd - touchStart).magnitude > dPadRadius) // moving the dpad while current mouse position is outside the dpad radius
+                {
+                    dpad.transform.position = touchStart + (touchEnd - touchStart).normalized * dPadRadius;
+                }
+                else
+                {
+                    dpad.transform.position = touchEnd; //moving the dpad when the mouse is inside the radius
+                }
+            }     
+        }
+        else
+        {
+            inputDirection = Vector2.zero;
+            dpad.gameObject.SetActive(false);
+            dpadBoundary.gameObject.SetActive(false);
+        }
+
+    }
+    
+     void calculateMobileInput()
     {
 
         if (Input.GetMouseButton(0)) //gets left mouse button
