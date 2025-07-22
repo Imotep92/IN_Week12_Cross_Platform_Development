@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 432957429}
   - component: {fileID: 432957428}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: '"Attack"'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 658563269}
   - component: {fileID: 658563268}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Attack Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,8 +512,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -648, y: -130}
-  m_SizeDelta: {x: 188.7, y: 116.2}
+  m_AnchoredPosition: {x: 541, y: -276}
+  m_SizeDelta: {x: 188.7, y: 143.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &658563268
 MonoBehaviour:
@@ -643,7 +643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -649, y: -325}
+  m_AnchoredPosition: {x: -537, y: -276}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &784479745
@@ -824,6 +824,7 @@ MonoBehaviour:
   inputDirection: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
   dpad: {fileID: 784479743}
+  dpadBoundary: {fileID: 1787106425}
   dPadRadius: 35
 --- !u!95 &1501746373
 Animator:
@@ -1059,7 +1060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1787106426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1069,14 +1070,14 @@ RectTransform:
   m_GameObject: {fileID: 1787106425}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1305644114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -649, y: -325}
+  m_AnchoredPosition: {x: -537, y: -276}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787106427

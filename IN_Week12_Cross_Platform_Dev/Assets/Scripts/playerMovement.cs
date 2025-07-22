@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class playerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
-    public Vector2 inputDirection,lookDirection;
-    Animator anim;
+    [SerializeField] float moveSpeed; //Player's speed
+    public Vector2 inputDirection,lookDirection; //player's input along x and y axis and corresponding look direction
+    Animator anim; // player animator
 
     private Vector3 touchStart, touchEnd;
-    [SerializeField] GameObject dpad;
-    public float dPadRadius = 10f;
+    [SerializeField] GameObject dpad; //dpad gameobject icon
+    
+    [SerializeField] GameObject dpadBoundary; //dpad boundary gameobject icon
+    [SerializeField] float dPadRadius = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +94,7 @@ public class playerMovement : MonoBehaviour
         if (Input.GetMouseButton(0)) //gets left mouse button
         {
             dpad.gameObject.SetActive(true);
+            dpadBoundary.gameObject.SetActive(true);
 
             if (Input.GetMouseButtonDown(0))  //the mouse poisition is recorded wher the click started
             {
@@ -105,9 +108,12 @@ public class playerMovement : MonoBehaviour
 
             inputDirection = new Vector2(x, y).normalized; // input direction is set
 
+            dpadBoundary.transform.position = touchStart; // boundary position is touchStart
+
             if ((touchEnd - touchStart).magnitude > dPadRadius) // moving the dpad while current mouse position is outside the dpad radius
             {
                 dpad.transform.position = touchStart + (touchEnd - touchStart).normalized * dPadRadius;
+
             }
             else
             {
@@ -118,6 +124,7 @@ public class playerMovement : MonoBehaviour
         {
             inputDirection = Vector2.zero;
             dpad.gameObject.SetActive(false);
+            dpadBoundary.gameObject.SetActive(false);
         }
 
     }
