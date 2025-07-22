@@ -10,7 +10,7 @@ public class playerMovement : MonoBehaviour
     public Vector2 inputDirection,lookDirection; //player's input along x and y axis and corresponding look direction
     Animator anim; // player animator
 
-    private Vector3 touchStart, touchEnd;
+    private Vector2 touchStart, touchEnd;
     [SerializeField] GameObject dpad; //dpad gameobject icon
     
     [SerializeField] GameObject dpadBoundary; //dpad boundary gameobject icon
