@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class playerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     public Vector2 inputDirection,lookDirection;
+    PlayerInput _playerInput;
+    InputAction moveAction;
     Animator anim;
 
     private Vector3 touchStart, touchEnd;
@@ -19,9 +22,12 @@ public class playerMovement : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-
         //makes the character look down by default
         lookDirection = new Vector2(0, -1);
+
+        // Referencing the new "player Input" map and associated "Move" Action made in Unity editor
+        _playerInput = GetComponent<PlayerInput>();
+        moveAction = _playerInput.actions.FindAction("Move");
     }
 
     // Update is called once per frame
@@ -43,12 +49,15 @@ public class playerMovement : MonoBehaviour
 
     void calculateDesktopInputs()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        // float x = Input.GetAxisRaw("Horizontal");
+        // float y = Input.GetAxisRaw("Vertical");
 
-        inputDirection = new Vector2(x, y).normalized;
+        // inputDirection = new Vector2(x, y).normalized;
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        // inputDirections references the new player input made in Unity Editor
+        inputDirection = moveAction.ReadValue<Vector2>();
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             attack();
         }
@@ -86,39 +95,39 @@ public class playerMovement : MonoBehaviour
         anim.SetTrigger("Attack");
     }
 
-    void calculateMobileInput()
-    {
+    // void calculateMobileInput()
+    // {
 
-        if (Input.GetMouseButton(0)) //gets left mouse button
-        {
-            dpad.gameObject.SetActive(true);
+    //     if (Input.GetMouseButton(0)) //gets left mouse button
+    //     {
+    //         dpad.gameObject.SetActive(true);
 
-            if (Input.GetMouseButtonDown(0))  //the mouse poisition is recorded wher the click started
-            {
-                touchStart = Input.mousePosition;
-            }
+    //         if (Input.GetMouseButtonDown(0))  //the mouse poisition is recorded wher the click started
+    //         {
+    //             touchStart = Input.mousePosition;
+    //         }
 
-            touchEnd = Input.mousePosition;  // the mouse position while the button is held down is recorded
+    //         touchEnd = Input.mousePosition;  // the mouse position while the button is held down is recorded
 
-            float x = touchEnd.x - touchStart.x; // Difference between start and current mouse position is recorded
-            float y = touchEnd.y - touchStart.y;
+    //         float x = touchEnd.x - touchStart.x; // Difference between start and current mouse position is recorded
+    //         float y = touchEnd.y - touchStart.y;
 
-            inputDirection = new Vector2(x, y).normalized; // input direction is set
+    //         inputDirection = new Vector2(x, y).normalized; // input direction is set
 
-            if ((touchEnd - touchStart).magnitude > dPadRadius) // moving the dpad while current mouse position is outside the dpad radius
-            {
-                dpad.transform.position = touchStart + (touchEnd - touchStart).normalized * dPadRadius;
-            }
-            else
-            {
-                dpad.transform.position = touchEnd; //moving the dpad when the mouse is inside the radius
-            }
-        }
-        else
-        {
-            inputDirection = Vector2.zero;
-            dpad.gameObject.SetActive(false);
-        }
+    //         if ((touchEnd - touchStart).magnitude > dPadRadius) // moving the dpad while current mouse position is outside the dpad radius
+    //         {
+    //             dpad.transform.position = touchStart + (touchEnd - touchStart).normalized * dPadRadius;
+    //         }
+    //         else
+    //         {
+    //             dpad.transform.position = touchEnd; //moving the dpad when the mouse is inside the radius
+    //         }
+    //     }
+    //     else
+    //     {
+    //         inputDirection = Vector2.zero;
+    //         dpad.gameObject.SetActive(false);
+    //     }
 
-    }
+    // }
 }
